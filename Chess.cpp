@@ -84,7 +84,6 @@ auto main() -> int {
 	vec.push_back(&whiteKnightRight);
 	vec.push_back(&whiteRookRight);
 
-
 	bool grabbed = false;
 	int currentID = 0;
 
@@ -96,7 +95,7 @@ auto main() -> int {
 				if (event.mouseButton.button == sf::Mouse::Left) {
 					auto clicked = sf::Mouse::getPosition(window);
 					int counter = 0;
-					for (auto e = vec.begin(); e != vec.end() && counter == 0; ++e) if ((*e)->getSprite().getGlobalBounds().contains(sf::Vector2f(clicked.x, clicked.y))) {
+					for (auto e = vec.begin(); e != vec.end() && counter == 0; ++e) if ((*e)->getLivingStatus() && (*e)->getSprite().getGlobalBounds().contains(sf::Vector2f(clicked.x, clicked.y))) {
 						currentID = (*e)->getID();
 						grabbed = true;
 						++counter;
@@ -129,6 +128,12 @@ auto main() -> int {
 							currentID = 0;
 							grabbed = false;
 						}
+						else if ((*e)->isThereKill(vec)) {
+							(*e)->setLocation(position.first, position.second);
+							++counter;
+							currentID = 0;
+							grabbed = false;
+						}
 						else {
 							auto temp = (*e)->getOldPosition();
 							(*e)->setLocation(temp.first, temp.second);
@@ -156,7 +161,7 @@ auto main() -> int {
 		}
 		
 		//Piece Drawing
-		for (auto e : vec) window.draw(e->getSprite());
+		for (auto e : vec) if ((*e).getLivingStatus()) window.draw(e->getSprite());
 
 		window.display();
 	}
