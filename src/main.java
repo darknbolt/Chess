@@ -13,7 +13,7 @@ public class main extends JFrame{
         this.setLayout(null);
         this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         this.setTitle("Chess");
-        this.setContentPane(new MyPanel());
+        this.setContentPane(new UsernameLogin());
         this.setSize(1000, 1000);
         this.setVisible(true);
     }
